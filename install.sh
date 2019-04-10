@@ -93,9 +93,10 @@ if [ $net = 1 ]; then
 
 mkdir -p HybridMode/$string 2>/dev/null
 
+
 case "$string" in
 "10141" ) bstring=18B75; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18B75/patchedapps/Hybrid-18B75-v1.3.zip?raw=true";;
-"10142" ) bstring=18C54; zname-"https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/patchedapps/HybridMode-185C4-v1.4.1.zip?raw=true";;
+"10142" ) bstring=18C54; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/patchedapps/HybridMode-185C4-v1.4.1.zip?raw=true";;
 "10143" ) bstring=18D109; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/patchedapps/Hybrid-18D109-v1.4.2.zip?raw=true";;
 "10144" ) bstring=18E226; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/patchedapps/Hybrid-18E226-v1.4.3.zip?raw=true";;
 esac
@@ -139,6 +140,7 @@ printf ' \n'
 
     fi
 fi
+
 
 if [ $net = 0 ]; then 
 unzip  -o -qq HybridMode.zip
