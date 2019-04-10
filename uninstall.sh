@@ -13,10 +13,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****              SpiraMira Hybrid Mode Patch Remover               ******\n'
-printf '*****                          Version 1.0                           ******\n'
+printf '*****                          Version 1.1                           ******\n'
                 else
 printf '\n\n*****         Удаляем патч гибридного режима интерфейса SpiraMira         ******\n'
-printf '*****                            Версия 1.0                               ******\n'
+printf '*****                            Версия 1.1                               ******\n'
             fi
 
 

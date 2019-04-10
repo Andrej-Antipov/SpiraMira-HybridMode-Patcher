@@ -12,10 +12,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****   SpiraMira Hybrid Mode Patch for Mojave (10.14.1 - 10.14.4)   ******\n'
-printf '*****                          Version 1.0                           ******\n'
+printf '*****                          Version 1.1                           ******\n'
                 else
 printf '\n\n*****   Патч гибридного режима интерфейса SpiraMira (10.14.1 - 10.14.4)   ******\n'
-printf '*****                            Версия 1.0                               ******\n'
+printf '*****                            Версия 1.1                               ******\n'
             fi
 
 sleep 0.5
@@ -59,9 +59,90 @@ if [ "$string" != "10141" ] && [ "$string" != "10142" ] && [  "$string" != "1014
     exit
 fi
 
+
+if [ ! $loc = "ru" ]; then 
+printf 'Checking internet conectivity\n'
+                else 
+printf 'Проверяем интернет соединение\n'
+fi
+
+if ping -c 1 google.com >> /dev/null 2>&1; then 
+        net=1
+    if [ ! $loc = "ru" ]; then 
+    printf 'Internet conectivity check passed.\n'
+                else 
+    printf 'Доступ в интернет подтвержден.\n'
+    fi
+ else 
+        net=0
+        if [ ! $loc = "ru" ]; then 
+    printf 'Internet conectivity check failed !!!\n'
+    printf 'local versions of the patch files will be used\n'
+    printf 'which may be obsolete\n'
+                else 
+    printf 'Интернет соединение недоступно !!!\n'
+    printf '\nБудут использованы локальные версии файлов\n'
+    printf 'Которые могут оказаться устаревшими\n'
+    fi
+fi
+
 cd $(dirname $0)
 
-unzip  -o -qq HybridMode.zip 
+if [ $net = 1 ]; then
+
+
+mkdir -p HybridMode/$string 2>/dev/null
+
+case "$string" in
+"10141" ) bstring=18B75; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18B75/patchedapps/Hybrid-18B75-v1.3.zip?raw=true";;
+"10142" ) bstring=18C54; zname-"https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/patchedapps/HybridMode-185C4-v1.4.1.zip?raw=true";;
+"10143" ) bstring=18D109; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/patchedapps/Hybrid-18D109-v1.4.2.zip?raw=true";;
+"10144" ) bstring=18E226; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/patchedapps/Hybrid-18E226-v1.4.3.zip?raw=true";;
+esac
+
+            if [ ! $loc = "ru" ]; then 
+    printf 'Downloading patched files from SpiraMira repository ...'
+            else 
+    printf 'Загрузка патченных файлов из репозитория SpiraMira  ...'
+            fi
+
+while :;do printf '.' ;sleep 0.4;done &
+trap "kill $!" EXIT 
+cd ./HybridMode/$string
+curl -L -s -o Hybrid.zip $zname 2>/dev/null
+unzip  -o -qq Hybrid*.zip 2>/dev/null
+rm -f HIToolbox
+rm -f CoreUI
+rm Hybrid*.zip 2>/dev/null
+mv CoreUI* CoreUI 2>/dev/null
+mv HIToolbox* HIToolbox 2>/dev/null
+cd ../../
+kill $!
+wait $! 2>/dev/null
+trap " " EXIT
+
+printf ' \n'
+
+    if [ ! -f "HybridMode/$string/CoreUI" ] || [ ! -f "HybridMode/$string/HIToolbox" ]; then 
+            if [ ! $loc = "ru" ]; then 
+            net=0
+    printf 'Downloading failed. Local files will be used. !!!\n'
+            else 
+    printf 'Загрузка не успешна. Используются локальные файлы. !!!\n'
+            fi
+        else
+    if [ ! $loc = "ru" ]; then 
+    printf 'Downloading successful.  !!!\n'
+            else 
+    printf 'Загрузка успешна. !!!\n'
+            fi
+
+    fi
+fi
+
+if [ $net = 0 ]; then 
+unzip  -o -qq HybridMode.zip
+fi
 unzip  -o -qq Original.zip
 
 SystemCoreUI=`md5 -q /System/Library/PrivateFrameworks/CoreUI.framework/Versions/Current/CoreUI`
@@ -196,3 +277,4 @@ clear
 osascript -e 'tell application "Terminal" to close first window' & exit
 
 exit
+
