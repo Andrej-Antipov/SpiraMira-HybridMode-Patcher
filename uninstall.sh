@@ -243,7 +243,7 @@ fi
 
     rm -R ./HybridMode
     rm -R ./Original
-    rm -R -f ./_MACOSX
+    rm -R -f ./__MACOSX
 
 
 if [ ! $loc = "ru" ]; then

@@ -87,7 +87,7 @@ read -p "Для выхода нажмите любую клавишу" -n 1 -r
 
     rm -R ./HybridMode
     rm -R ./Original
-    rm -R -f ./_MACOSX
+    rm -R -f ./__MACOSX
 
 clear
 osascript -e 'tell application "Terminal" to close first window' & exit
@@ -185,7 +185,7 @@ fi
 
     rm -R ./HybridMode
     rm -R ./Original
-    rm -R -f ./_MACOSX
+    rm -R -f ./__MACOSX
 
         if [ ! $loc = "ru" ]; then
 read -p "Press any key to close this window " -n 1 -r
