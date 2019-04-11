@@ -117,6 +117,8 @@ rm -f CoreUI
 rm Hybrid*.zip 2>/dev/null
 mv CoreUI* CoreUI 2>/dev/null
 mv HIToolbox* HIToolbox 2>/dev/null
+chmod +x CoreUI
+chmod +x HIToolbox
 cd ../../
 kill $!
 wait $! 2>/dev/null
