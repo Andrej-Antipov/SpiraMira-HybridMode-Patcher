@@ -13,10 +13,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****              SpiraMira Hybrid Mode Patch Remover               ******\n'
-printf '*****                          Version 1.3                           ******\n'
+printf '*****                      Version 1.4 net                           ******\n'
                 else
 printf '\n\n*****         Удаляем патч гибридного режима интерфейса SpiraMira         ******\n'
-printf '*****                            Версия 1.3                               ******\n'
+printf '*****                         Версия 1.4 net                              ******\n'
             fi
 
 
@@ -77,18 +77,20 @@ if ping -c 1 google.com >> /dev/null 2>&1; then
         net=0
         if [ ! $loc = "ru" ]; then 
     printf 'Internet conectivity check failed !!!\n'
-    printf 'local versions of the original files will be used\n'
+    
                 else 
     printf 'Интернет соединение недоступно !!!\n'
-    printf '\nБудут использованы локальные версии файлов\n'
+    
     fi
 fi
 
 cd $(dirname $0)
 
+
 if [ $net = 1 ]; then
 
 mkdir -p Original/$string  2>/dev/null
+mkdir -p HybridMode/$string 2>/dev/null
 
 case "$string" in
 "10141" ) bstring=18B75; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18B75/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18B75/originalapps/HIToolbox?raw=true";;
@@ -121,9 +123,58 @@ printf ' \n'
             if [ ! $loc = "ru" ]; then 
             net=0
 	rm -R -f Original
-    printf 'Downloading failed. Local files will be used. !!!\n'
+    printf 'Downloading failed.  !!!\n'
             else 
-    printf 'Загрузка не успешна. Используются локальные файлы. !!!\n'
+    printf 'Загрузка не успешна.  !!!\n'
+            fi
+        else
+    if [ ! $loc = "ru" ]; then 
+    printf 'Downloading successful.  !!!\n'
+            else 
+    printf 'Загрузка успешна. !!!\n'
+            fi
+
+    fi
+
+case "$string" in
+"10141" ) bstring=18B75; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18B75/patchedapps/Hybrid-18B75-v1.3.zip?raw=true";;
+"10142" ) bstring=18C54; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/patchedapps/HybridMode-185C4-v1.4.1.zip?raw=true";;
+"10143" ) bstring=18D109; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/patchedapps/Hybrid-18D109-v1.4.2.zip?raw=true";;
+"10144" ) bstring=18E226; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/patchedapps/Hybrid-18E226-v1.4.3.zip?raw=true";;
+esac
+
+            if [ ! $loc = "ru" ]; then 
+    printf 'Downloading patched files from SpiraMira repository .\n'
+            else 
+    printf 'Загрузка патченных файлов из репозитория SpiraMira  .\n'
+            fi
+
+while :;do printf '.' ;sleep 0.4;done &
+trap "kill $!" EXIT 
+cd ./HybridMode/$string
+curl -L -s -o Hybrid.zip $zname 2>/dev/null
+unzip  -o -qq Hybrid*.zip 2>/dev/null
+rm -f HIToolbox
+rm -f CoreUI
+rm Hybrid*.zip 2>/dev/null
+mv CoreUI* CoreUI 2>/dev/null
+mv HIToolbox* HIToolbox 2>/dev/null
+chmod +x CoreUI
+chmod +x HIToolbox
+cd ../../
+kill $!
+wait $! 2>/dev/null
+trap " " EXIT
+
+printf ' \n'
+
+    if [ ! -f "HybridMode/$string/CoreUI" ] || [ ! -f "HybridMode/$string/HIToolbox" ]; then 
+            if [ ! $loc = "ru" ]; then 
+            net=0
+	rm -R -f HybridMode
+    printf 'Downloading failed. !!!\n'
+            else 
+    printf 'Загрузка не успешна. !!!\n'
             fi
         else
     if [ ! $loc = "ru" ]; then 
@@ -135,9 +186,23 @@ printf ' \n'
     fi
 fi
 
-unzip  -o -qq HybridMode.zip 
-if [ $net = 0 ]; then
-unzip  -o -qq Original.zip
+
+if [ $net = 0 ]; then 
+
+            if [ ! $loc = "ru" ]; then 
+    printf 'this network version of the program does not contain local files  !!!\n'
+    printf 'the end of the program  !!!\n\n'
+    read -p "Press any key to close this window " -n 1 -r
+            else 
+    printf 'Это сетевая версия патчера не содержит локальные файлы !!!\n'
+    printf 'Продолжение программы невозможно. !!!\n\n'
+    read -p "Для выхода нажмите любую клавишу" -n 1 -r
+            fi
+    rm -R ./HybridMode
+    rm -R ./Original
+    rm -R -f ./__MACOSX
+clear
+osascript -e 'tell application "Terminal" to close first window' & exit
 fi
 
 if [ -f "Original/$string/CoreUI" ]; then

@@ -12,10 +12,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****   SpiraMira Hybrid Mode Patch for Mojave (10.14.1 - 10.14.4)   ******\n'
-printf '*****                          Version 1.3                           ******\n'
+printf '*****                      Version 1.4 net                           ******\n'
                 else
 printf '\n\n*****   Патч гибридного режима интерфейса SpiraMira (10.14.1 - 10.14.4)   ******\n'
-printf '*****                            Версия 1.3                               ******\n'
+printf '*****                        Версия 1.4 net                               ******\n'
             fi
 
 sleep 0.5
@@ -77,12 +77,9 @@ if ping -c 1 google.com >> /dev/null 2>&1; then
         net=0
         if [ ! $loc = "ru" ]; then 
     printf 'Internet conectivity check failed !!!\n'
-    printf 'local versions of the patch files will be used\n'
-    printf 'which may be obsolete\n'
-                else 
+                    else 
     printf 'Интернет соединение недоступно !!!\n'
-    printf '\nБудут использованы локальные версии файлов\n'
-    printf 'Которые могут оказаться устаревшими\n'
+    
     fi
 fi
 
@@ -92,6 +89,7 @@ if [ $net = 1 ]; then
 
 
 mkdir -p HybridMode/$string 2>/dev/null
+mkdir -p Original/$string  2>/dev/null
 
 
 case "$string" in
@@ -102,9 +100,9 @@ case "$string" in
 esac
 
             if [ ! $loc = "ru" ]; then 
-    printf 'Downloading patched files from SpiraMira repository ...'
+    printf 'Downloading patched files from SpiraMira repository .\n'
             else 
-    printf 'Загрузка патченных файлов из репозитория SpiraMira  ...'
+    printf 'Загрузка патченных файлов из репозитория SpiraMira .\n'
             fi
 
 while :;do printf '.' ;sleep 0.4;done &
@@ -130,9 +128,52 @@ printf ' \n'
             if [ ! $loc = "ru" ]; then 
             net=0
 	rm -R -f HybridMode
-    printf 'Downloading failed. Local files will be used. !!!\n'
+    printf 'Downloading failed. !!!\n'
             else 
-    printf 'Загрузка не успешна. Используются локальные файлы. !!!\n'
+    printf 'Загрузка не успешна. !!!\n'
+            fi
+        else
+    if [ ! $loc = "ru" ]; then 
+    printf 'Downloading successful.  !!!\n'
+            else 
+    printf 'Загрузка успешна. !!!\n'
+            fi
+
+    fi
+case "$string" in
+"10141" ) bstring=18B75; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18B75/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18B75/originalapps/HIToolbox?raw=true";;
+"10142" ) bstring=18C54; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/originalapps/HIToolbox?raw=true";;
+"10143" ) bstring=18D109; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/originalapps/HIToolbox?raw=true";;
+"10144" ) bstring=18E226; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/originalapps/HIToolbox?raw=true";;
+esac
+
+ if [ ! $loc = "ru" ]; then 
+    printf 'Downloading original files from SpiraMira repository \n'
+            else 
+    printf 'Загрузка  оригинальных файлов из репозитория SpiraMira \n'
+            fi
+
+while :;do printf '.' ;sleep 0.4;done &
+trap "kill $!" EXIT 
+cd ./Original/$string
+curl -L -s -o CoreUI $cname 2>/dev/null
+curl -L -s -o HIToolbox $hname 2>/dev/null
+chmod +x CoreUI
+chmod +x HIToolbox
+cd ../../
+kill $!
+wait $! 2>/dev/null
+trap " " EXIT
+
+printf ' \n'
+
+ if [ ! -f "Original/$string/CoreUI" ] || [ ! -f "Original/$string/HIToolbox" ]; then 
+            if [ ! $loc = "ru" ]; then 
+            net=0
+	rm -R -f Original
+    printf 'Downloading failed. !!!\n'
+            else 
+    printf 'Загрузка не успешна. !!!\n'
             fi
         else
     if [ ! $loc = "ru" ]; then 
@@ -145,10 +186,27 @@ printf ' \n'
 fi
 
 
+
 if [ $net = 0 ]; then 
-unzip  -o -qq HybridMode.zip
+
+            if [ ! $loc = "ru" ]; then 
+    printf 'this network version of the program does not contain local files  !!!\n'
+    printf 'the end of the program  !!!\n\n'
+    read -p "Press any key to close this window " -n 1 -r
+            else 
+    printf 'Это сетевая версия патчера не содержит локальные файлы !!!\n'
+    printf 'Продолжение программы невозможно. !!!\n\n'
+    read -p "Для выхода нажмите любую клавишу" -n 1 -r
+            fi
+    rm -R ./HybridMode
+    rm -R ./Original
+    rm -R -f ./__MACOSX
+clear
+osascript -e 'tell application "Terminal" to close first window' & exit
+         
+
 fi
-unzip  -o -qq Original.zip
+
 
 SystemCoreUI=`md5 -q /System/Library/PrivateFrameworks/CoreUI.framework/Versions/Current/CoreUI`
 SystemHIToolbox=`md5 -q /System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Versions/Current/HIToolbox`
