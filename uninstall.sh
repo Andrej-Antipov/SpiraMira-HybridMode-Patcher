@@ -13,10 +13,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****              SpiraMira Hybrid Mode Patch Remover               ******\n'
-printf '*****                          Version 1.31                          ******\n'
+printf '*****                      Version 1.4 net                           ******\n'
                 else
 printf '\n\n*****         Удаляем патч гибридного режима интерфейса SpiraMira         ******\n'
-printf '*****                            Версия 1.31                              ******\n'
+printf '*****                         Версия 1.4 net                              ******\n'
             fi
 
 
@@ -60,36 +60,32 @@ if [ "$string" != "10141" ] && [ "$string" != "10142" ] && [  "$string" != "1014
     exit
 fi
 
+if [ ! $loc = "ru" ]; then 
+printf 'Checking internet conectivity\n'
+                else 
+printf 'Проверяем интернет соединение\n'
+fi
 
-
-cd $(dirname $0)
-
-if [ ! -f "Original.zip" ]; then
-
-        if [ ! $loc = "ru" ]; then 
-    printf 'The Local archive of files is not found\n'
-    printf 'Checking internet conectivity\n'
-                else
-    printf 'Нет локального архива с файлами для восстановления\n' 
-    printf 'Проверяем интернет соединение\n'
-        fi
-
-    if ping -c 1 google.com >> /dev/null 2>&1; then 
+if ping -c 1 google.com >> /dev/null 2>&1; then 
         net=1
-        if [ ! $loc = "ru" ]; then 
+    if [ ! $loc = "ru" ]; then 
     printf 'Internet conectivity check passed.\n'
                 else 
     printf 'Доступ в интернет подтвержден.\n'
-        fi
-    else 
+    fi
+ else 
         net=0
         if [ ! $loc = "ru" ]; then 
     printf 'Internet conectivity check failed !!!\n'
     
                 else 
     printf 'Интернет соединение недоступно !!!\n'
-        fi
+    
     fi
+fi
+
+cd $(dirname $0)
+
 
 if [ $net = 1 ]; then
 
@@ -138,30 +134,34 @@ printf ' \n'
             fi
 
     fi
- fi
+
+fi
+
 
 if [ $net = 0 ]; then 
-
+    if [ ! -f "Original.zip" ]; then
             if [ ! $loc = "ru" ]; then 
-    printf 'No local files and failed to get them from the server.  !!!\n'
+    printf 'this network version of the program does not contain local files  !!!\n'
     printf 'the end of the program  !!!\n\n'
     read -p "Press any key to close this window " -n 1 -r
             else 
-    printf 'Локального архива нет и получить файлы из сети не удалось !!!\n'
+    printf 'Это сетевая версия патчера не содержит локальные файлы !!!\n'
     printf 'Продолжение программы невозможно. !!!\n\n'
     read -p "Для выхода нажмите любую клавишу" -n 1 -r
             fi
-    rm -R -f ./Original
+    rm -R ./Original
     rm -R -f ./__MACOSX
 clear
 osascript -e 'tell application "Terminal" to close first window' & exit
+     else
+        if [ ! $loc = "ru" ]; then 
+    printf 'Local archive files found.  !!!\n'
+            else 
+    printf 'Найден локальный архив. !!!\n'
+         fi
+     unzip  -o -qq Original.zip 
+    fi   
 fi
-
-    else 
-        unzip  -o -qq Original.zip
-
-fi
-
 
 if [ -f "Original/$string/CoreUI" ]; then
 SystemCoreUI=`md5 -q /System/Library/PrivateFrameworks/CoreUI.framework/Versions/Current/CoreUI`
@@ -209,9 +209,6 @@ if [ ! -f "Original/$string/CoreUI" ]; then
         sudo cp Original/$string/CoreUI /System/Library/PrivateFrameworks/CoreUI.framework/Versions/Current/
         sudo chmod 755 /Volumes/OSX/S*/L*/PrivateFrameworks/CoreUI.framework/Versions/Current/CoreUI
         sudo chown 0:0 /Volumes/OSX/S*/L*/PrivateFrameworks/CoreUI.framework/Versions/Current/CoreUI
-        if [ -f "/System/Library/PrivateFrameworks/CoreUI.framework/Versions/Current/CoreUI.back" ]; then
-                sudo rm /System/Library/PrivateFrameworks/CoreUI.framework/Versions/Current/CoreUI.back
-                fi
                         if [ $loc = "ru" ]; then    
         printf '\nВосстановлен CoreUI из папки Original ('$string') \n'
                             else
@@ -229,6 +226,7 @@ if [ ! -f "Original/$string/HIToolbox" ]; then
                                             else
                         printf '\nThe Backup to restore original HIToolbox is not found\n'
                                     fi
+                
      else
                  if [[ $SystemHIToolbox = $BackHIToolbox ]]; then
                         error=3
@@ -248,15 +246,12 @@ if [ ! -f "Original/$string/HIToolbox" ]; then
                                 printf 'Для продолжения введите пароль пользователя мак\n'
                                 printf 'Для отмены выполнения нажмите CTRL+Z \n\n'
                                 fi
-                  fi
+                            fi
         frstat=1
         sudo rm /System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Versions/Current/HIToolbox
         sudo cp Original/$string/HiToolbox /System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Versions/Current/
         sudo chmod 755 /Volumes/OSX/S*/L*/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Versions/Current/HIToolbox
         sudo chown 0:0 /Volumes/OSX/S*/L*/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Versions/Current/HIToolbox
-        if [ -f "/System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Versions/Current/HIToolbox.back" ]; then
-        sudo rm /System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Versions/Current/HIToolbox.back
-        fi
                     if [ $loc = "ru" ]; then   
         printf '\nВосстановлен HIToolbox из папки Original ('$string') \n'
                             else
@@ -299,8 +294,7 @@ printf 'Перезагрузите систему для применения и
             fi
 fi
 
-
-    rm -R -f ./Original
+    rm -R ./Original
     rm -R -f ./__MACOSX
 
 

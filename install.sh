@@ -12,10 +12,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****   SpiraMira Hybrid Mode Patch for Mojave (10.14.1 - 10.14.4)   ******\n'
-printf '*****                          Version 1.31                          ******\n'
+printf '*****                      Version 1.41 net                          ******\n'
                 else
 printf '\n\n*****   Патч гибридного режима интерфейса SpiraMira (10.14.1 - 10.14.4)   ******\n'
-printf '*****                            Версия 1.31                              ******\n'
+printf '*****                        Версия 1.41 net                              ******\n'
             fi
 
 sleep 0.5
@@ -77,12 +77,9 @@ if ping -c 1 google.com >> /dev/null 2>&1; then
         net=0
         if [ ! $loc = "ru" ]; then 
     printf 'Internet conectivity check failed !!!\n'
-    printf 'local versions of the patch files will be used\n'
-    printf 'which may be obsolete\n'
-                else 
+                    else 
     printf 'Интернет соединение недоступно !!!\n'
-    printf '\nБудут использованы локальные версии файлов\n'
-    printf 'Которые могут оказаться устаревшими\n'
+    
     fi
 fi
 
@@ -130,9 +127,9 @@ printf ' \n'
             if [ ! $loc = "ru" ]; then 
             net=0
 	rm -R -f HybridMode
-    printf 'Downloading failed. Local files will be used. !!!\n'
+    printf 'Downloading failed. !!!\n'
             else 
-    printf 'Загрузка не успешна. Используются локальные файлы. !!!\n'
+    printf 'Загрузка не успешна. !!!\n'
             fi
         else
     if [ ! $loc = "ru" ]; then 
@@ -142,58 +139,68 @@ printf ' \n'
             fi
 
     fi
+
 fi
+
 
 
 if [ $net = 0 ]; then 
     if [ ! -f "HybridMode.zip" ]; then
-            if [ ! $loc = "ru" ]; then 
-    printf 'No local patch files and failed to get them from the server.  !!!\n'
+           if [ ! $loc = "ru" ]; then 
+    printf 'this network version of the program does not contain local files  !!!\n'
     printf 'the end of the program  !!!\n\n'
     read -p "Press any key to close this window " -n 1 -r
             else 
-    printf 'Локального архива для патча нет и получить файлы из сети не удалось !!!\n'
+    printf 'Это сетевая версия патчера не содержит локальные файлы !!!\n'
     printf 'Продолжение программы невозможно. !!!\n\n'
     read -p "Для выхода нажмите любую клавишу" -n 1 -r
             fi
-    rm -R -f ./HybridMode
+    rm -R ./HybridMode
     rm -R -f ./__MACOSX
 clear
 osascript -e 'tell application "Terminal" to close first window' & exit
     else
-unzip  -o -qq HybridMode.zip
-    fi
+        if [ ! $loc = "ru" ]; then 
+    printf 'Local archive files found.  !!!\n'
+            else 
+    printf 'Найден локальный архив. !!!\n'
+         fi
+     unzip  -o -qq HybridMode.zip 
+    fi   
 fi
+
 
 SystemCoreUI=`md5 -q /System/Library/PrivateFrameworks/CoreUI.framework/Versions/Current/CoreUI`
 SystemHIToolbox=`md5 -q /System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Versions/Current/HIToolbox`
 ModCoreUI=`md5 -q HybridMode/$string/CoreUI`
 ModHIToolbox=`md5 -q HybridMode/$string/HiToolbox`
 
+
 if [[ $SystemCoreUI = $ModCoreUI ]]; then 
    
     if [[ $SystemHIToolbox = $ModHIToolbox ]]; then
-        if [ ! $loc = "ru" ]; then
+            if [ ! $loc = "ru" ]; then
         printf 'OK ! Hybrid mod patch has already done\n\n\n'
                 else
         printf 'OK ! патч гибридного режима уже был сделан\n\n\n'
             fi
-        if [ ! $loc = "ru" ]; then
+            if [ ! $loc = "ru" ]; then
 read -p "Press any key to close this window " -n 1 -r
                 else
 read -p "Для выхода нажмите любую клавишу" -n 1 -r
             fi
 
-    rm -R -f ./HybridMode
+    rm -R ./HybridMode
     rm -R -f ./__MACOSX
 
 clear
 osascript -e 'tell application "Terminal" to close first window' & exit
     fi
-             
+       
 fi
 
 frstat=0
+
 
 
 if [[ ! $SystemCoreUI = $ModCoreUI ]]; then
