@@ -12,10 +12,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****   SpiraMira Hybrid Mode Patch for Mojave (10.14.1 - 10.14.4)   ******\n'
-printf '*****                          Version 1.1                           ******\n'
+printf '*****                          Version 1.3                           ******\n'
                 else
 printf '\n\n*****   Патч гибридного режима интерфейса SpiraMira (10.14.1 - 10.14.4)   ******\n'
-printf '*****                            Версия 1.1                               ******\n'
+printf '*****                            Версия 1.3                               ******\n'
             fi
 
 sleep 0.5
@@ -127,6 +127,7 @@ printf ' \n'
     if [ ! -f "HybridMode/$string/CoreUI" ] || [ ! -f "HybridMode/$string/HIToolbox" ]; then 
             if [ ! $loc = "ru" ]; then 
             net=0
+	rm -R -f HybridMode
     printf 'Downloading failed. Local files will be used. !!!\n'
             else 
     printf 'Загрузка не успешна. Используются локальные файлы. !!!\n'

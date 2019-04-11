@@ -13,10 +13,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****              SpiraMira Hybrid Mode Patch Remover               ******\n'
-printf '*****                          Version 1.1                           ******\n'
+printf '*****                          Version 1.3                           ******\n'
                 else
 printf '\n\n*****         Удаляем патч гибридного режима интерфейса SpiraMira         ******\n'
-printf '*****                            Версия 1.1                               ******\n'
+printf '*****                            Версия 1.3                               ******\n'
             fi
 
 
@@ -60,10 +60,85 @@ if [ "$string" != "10141" ] && [ "$string" != "10142" ] && [  "$string" != "1014
     exit
 fi
 
+if [ ! $loc = "ru" ]; then 
+printf 'Checking internet conectivity\n'
+                else 
+printf 'Проверяем интернет соединение\n'
+fi
+
+if ping -c 1 google.com >> /dev/null 2>&1; then 
+        net=1
+    if [ ! $loc = "ru" ]; then 
+    printf 'Internet conectivity check passed.\n'
+                else 
+    printf 'Доступ в интернет подтвержден.\n'
+    fi
+ else 
+        net=0
+        if [ ! $loc = "ru" ]; then 
+    printf 'Internet conectivity check failed !!!\n'
+    printf 'local versions of the original files will be used\n'
+                else 
+    printf 'Интернет соединение недоступно !!!\n'
+    printf '\nБудут использованы локальные версии файлов\n'
+    fi
+fi
+
 cd $(dirname $0)
 
+if [ $net = 1 ]; then
+
+mkdir -p Original/$string  2>/dev/null
+
+case "$string" in
+"10141" ) bstring=18B75; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18B75/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18B75/originalapps/HIToolbox?raw=true";;
+"10142" ) bstring=18C54; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/originalapps/HIToolbox?raw=true";;
+"10143" ) bstring=18D109; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/originalapps/HIToolbox?raw=true";;
+"10144" ) bstring=18E226; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/originalapps/HIToolbox?raw=true";;
+esac
+
+ if [ ! $loc = "ru" ]; then 
+    printf 'Downloading original files from SpiraMira repository \n'
+            else 
+    printf 'Загрузка  оригинальных файлов из репозитория SpiraMira \n'
+            fi
+
+while :;do printf '.' ;sleep 0.4;done &
+trap "kill $!" EXIT 
+cd ./Original/$string
+curl -L -s -o CoreUI $cname 2>/dev/null
+curl -L -s -o HIToolbox $hname 2>/dev/null
+chmod +x CoreUI
+chmod +x HIToolbox
+cd ../../
+kill $!
+wait $! 2>/dev/null
+trap " " EXIT
+
+printf ' \n'
+
+ if [ ! -f "Original/$string/CoreUI" ] || [ ! -f "Original/$string/HIToolbox" ]; then 
+            if [ ! $loc = "ru" ]; then 
+            net=0
+	rm -R -f Original
+    printf 'Downloading failed. Local files will be used. !!!\n'
+            else 
+    printf 'Загрузка не успешна. Используются локальные файлы. !!!\n'
+            fi
+        else
+    if [ ! $loc = "ru" ]; then 
+    printf 'Downloading successful.  !!!\n'
+            else 
+    printf 'Загрузка успешна. !!!\n'
+            fi
+
+    fi
+fi
+
 unzip  -o -qq HybridMode.zip 
+if [ $net = 0 ]; then
 unzip  -o -qq Original.zip
+fi
 
 if [ -f "Original/$string/CoreUI" ]; then
 SystemCoreUI=`md5 -q /System/Library/PrivateFrameworks/CoreUI.framework/Versions/Current/CoreUI`
