@@ -42,9 +42,15 @@ string=`sw_vers -productVersion`
 string=`echo ${string//[^0-9]/}`
 string=${string:0:5}
 
+legal=0
+case "$string" in
+"10141" ) legal=1;;
+"10142" ) legal=1;;
+"10143" ) legal=1;;
+"10144" ) legal=1;;
+esac
 
-
-if [ "$string" != "10141" ] && [ "$string" != "10142" ] && [  "$string" != "10143" ] && [  "$string" != "10144" ]; then
+if [ $legal = 0 ]; then
             if [ ! $loc = "ru" ]; then
     printf '\nThis program is for 10.14.1 - 10.14.4 (Mojave) only\n'
     printf '\n!!!! UNABLE TO CONTUNUE. BYE !!!!\n\n\n\n\n'
