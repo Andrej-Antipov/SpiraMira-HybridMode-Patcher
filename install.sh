@@ -114,8 +114,8 @@ rm -f CoreUI
 rm Hybrid*.zip 2>/dev/null
 mv CoreUI* CoreUI 2>/dev/null
 mv HIToolbox* HIToolbox 2>/dev/null
-chmod +x CoreUI
-chmod +x HIToolbox
+chmod +x CoreUI 2>/dev/null
+chmod +x HIToolbox 2>/dev/null
 cd ../../
 kill $!
 wait $! 2>/dev/null
@@ -123,19 +123,19 @@ trap " " EXIT
 
 printf ' \n'
 
-    if [ ! -f "HybridMode/$string/CoreUI" ] || [ ! -f "HybridMode/$string/HIToolbox" ]; then 
-            if [ ! $loc = "ru" ]; then 
+    if [ ! -f "HybridMode/$string/CoreUI" ] || [ ! -f "HybridMode/$string/HIToolbox" ]; then
             net=0
-	rm -R -f HybridMode
-    printf 'Downloading failed. !!!\n'
+	        rm -R -f HybridMode
+            if [ ! $loc = "ru" ]; then 
+    printf 'Downloading failed. !!!\n\n'
             else 
-    printf 'Загрузка не успешна. !!!\n'
+    printf 'Загрузка не успешна. !!!\n\n'
             fi
         else
     if [ ! $loc = "ru" ]; then 
-    printf 'Downloading successful.  !!!\n'
+    printf 'Downloading successful.  !!!\n\n'
             else 
-    printf 'Загрузка успешна. !!!\n'
+    printf 'Загрузка успешна. !!!\n\n'
             fi
 
     fi
@@ -148,11 +148,11 @@ if [ $net = 0 ]; then
     if [ ! -f "HybridMode.zip" ]; then
            if [ ! $loc = "ru" ]; then 
     printf 'this network version of the program does not contain local files  !!!\n'
-    printf 'the end of the program  !!!\n\n'
+    printf 'the end of the program  !!!\n\n\n'
     read -p "Press any key to close this window " -n 1 -r
             else 
     printf 'Это сетевая версия патчера не содержит локальные файлы !!!\n'
-    printf 'Продолжение программы невозможно. !!!\n\n'
+    printf 'Продолжение программы невозможно. !!!\n\n\n'
     read -p "Для выхода нажмите любую клавишу" -n 1 -r
             fi
     rm -R ./HybridMode

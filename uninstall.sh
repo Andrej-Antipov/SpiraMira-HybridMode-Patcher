@@ -109,8 +109,10 @@ trap "kill $!" EXIT
 cd ./Original/$string
 curl -L -s -o CoreUI $cname 2>/dev/null
 curl -L -s -o HIToolbox $hname 2>/dev/null
-chmod +x CoreUI
-chmod +x HIToolbox
+chmod +x CoreUI 2>/dev/null
+chmod +x HIToolbox 2>/dev/null
+if [ `stat -f%z HIToolbox` -lt 1000000 ]; then rm -f HIToolbox; fi
+if [ `stat -f%z CoreUI` -lt 1000000 ]; then rm -f HIToolbox; fi
 cd ../../
 kill $!
 wait $! 2>/dev/null
@@ -118,23 +120,23 @@ trap " " EXIT
 
 printf ' \n'
 
- if [ ! -f "Original/$string/CoreUI" ] || [ ! -f "Original/$string/HIToolbox" ]; then 
+ if [ ! -f "Original/$string/CoreUI" ] || [ ! -f "Original/$string/HIToolbox" ]; then
+             net=0
+	         rm -R -f Original
             if [ ! $loc = "ru" ]; then 
-            net=0
-	rm -R -f Original
     printf 'Downloading failed.  !!!\n'
             else 
     printf 'Загрузка не успешна.  !!!\n'
             fi
         else
-    if [ ! $loc = "ru" ]; then 
+            if [ ! $loc = "ru" ]; then 
     printf 'Downloading successful.  !!!\n'
             else 
     printf 'Загрузка успешна. !!!\n'
             fi
 
     fi
-
+  
 fi
 
 
