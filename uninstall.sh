@@ -13,10 +13,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****              SpiraMira Hybrid Mode Patch Remover               ******\n'
-printf '*****                      Version 1.4 net                           ******\n'
+printf '*****                   Version 1.42 BETA net                        ******\n'
                 else
 printf '\n\n*****         Удаляем патч гибридного режима интерфейса SpiraMira         ******\n'
-printf '*****                         Версия 1.4 net                              ******\n'
+printf '*****                      Версия 1.42 BETA net                           ******\n'
             fi
 
 
@@ -51,15 +51,16 @@ case "$string" in
 "10142" ) legal=1;;
 "10143" ) legal=1;;
 "10144" ) legal=1;;
+"10145" ) legal=1;;
 esac
 
 if [ $legal = 0 ]; then
             if [ ! $loc = "ru" ]; then
-    printf '\nThis program is for 10.14.1 - 10.14.4 (Mojave) only\n'
+    printf '\nThis program is for 10.14.1 - 10.14.5 (Mojave) only\n'
     printf '\n!!!! UNABLE TO CONTUNUE. BYE !!!!\n\n\n\n\n'
     read -p "Press any key to close this window " -n 1 -r
             else
-    printf '\nЭта программа только для 10.14.1 - 10.14.4 (Mojave) \n'
+    printf '\nЭта программа только для 10.14.1 - 10.14.5 (Mojave) \n'
     printf '\n!!!! ВЫПОЛНЕНИЕ НЕВОЗМОЖНО. ВЫХОД !!!!\n\n\n\n\n'
     read -p "Для выхода нажмите любую клавишу" -n 1 -r
         fi
@@ -104,6 +105,7 @@ case "$string" in
 "10142" ) bstring=18C54; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/originalapps/HIToolbox?raw=true";;
 "10143" ) bstring=18D109; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/originalapps/HIToolbox?raw=true";;
 "10144" ) bstring=18E226; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/originalapps/HIToolbox?raw=true";;
+"10145" ) bstring=18F108f; cname="https://github.com/Andrej-Antipov/SpiraMira-HybridMode-Patcher/blob/master/Original/10145/CoreUI?raw=true"; hname="https://github.com/Andrej-Antipov/SpiraMira-HybridMode-Patcher/blob/master/Original/10145/HIToolbox?raw=true";;
 esac
 
  if [ ! $loc = "ru" ]; then 
@@ -169,7 +171,22 @@ osascript -e 'tell application "Terminal" to close first window' & exit
             else 
     printf 'Найден локальный архив. !!!\n'
          fi
-     unzip  -o -qq Original.zip 
+     unzip  -o -qq Original.zip
+        if [ ! -f "Original/$string/CoreUI" ] || [ ! -f "Original/$string/HIToolbox" ]; then
+            if [ ! $loc = "ru" ]; then 
+    printf 'The original files to restore '"`sw_vers -productVersion`"' not found in the archive. !!!\n\n'
+    printf 'the end of the program  !!!\n\n\n'
+    read -p "Press any key to close this window " -n 1 -r
+            else 
+    printf 'Файлы для восстановления '"`sw_vers -productVersion`"' в архиве не найдены !!!\n\n'
+    printf 'Продолжение программы невозможно. !!!\n\n\n'
+    read -p "Для выхода нажмите любую клавишу" -n 1 -r
+            fi
+        rm -R -f ./Original
+        rm -R -f ./__MACOSX
+    clear
+    osascript -e 'tell application "Terminal" to close first window' & exit
+        fi    
     fi   
 fi
 

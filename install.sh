@@ -11,11 +11,11 @@ clear
 loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
-printf '\n\n*****   SpiraMira Hybrid Mode Patch for Mojave (10.14.1 - 10.14.4)   ******\n'
-printf '*****                      Version 1.41 net                          ******\n'
+printf '\n\n*****   SpiraMira Hybrid Mode Patch for Mojave (10.14.1 - 10.14.5)   ******\n'
+printf '*****                    Version 1.42 BETA net                       ******\n'
                 else
-printf '\n\n*****   Патч гибридного режима интерфейса SpiraMira (10.14.1 - 10.14.4)   ******\n'
-printf '*****                        Версия 1.41 net                              ******\n'
+printf '\n\n*****   Патч гибридного режима интерфейса SpiraMira (10.14.1 - 10.14.5)   ******\n'
+printf '*****                      Версия 1.42 BETA net                           ******\n'
             fi
 
 sleep 0.5
@@ -27,7 +27,7 @@ printf ': '; printf "`sw_vers -productVersion`"
 printf '('
 printf "`sw_vers -buildVersion`"
 printf ') '
-printf '            ******\n\n\n'
+printf '           ******\n\n\n'
                 else
 printf '*****                Ваша система '
 printf "`sw_vers -productName`"
@@ -35,7 +35,7 @@ printf ': '; printf "`sw_vers -productVersion`"
 printf '('
 printf "`sw_vers -buildVersion`"
 printf ') '
-printf '              ******\n\n\n'
+printf '             ******\n\n\n'
             fi
 
 string=`sw_vers -productVersion` 
@@ -48,15 +48,16 @@ case "$string" in
 "10142" ) legal=1;;
 "10143" ) legal=1;;
 "10144" ) legal=1;;
+"10145" ) legal=1;;
 esac
 
 if [ $legal = 0 ]; then
             if [ ! $loc = "ru" ]; then
-    printf '\nThis program is for 10.14.1 - 10.14.4 (Mojave) only\n'
+    printf '\nThis program is for 10.14.1 - 10.14.5 (Mojave) only\n'
     printf '\n!!!! UNABLE TO CONTUNUE. BYE !!!!\n\n\n\n\n'
     read -p "Press any key to close this window " -n 1 -r
             else
-    printf '\nЭта программа только для 10.14.1 - 10.14.4 (Mojave) \n'
+    printf '\nЭта программа только для 10.14.1 - 10.14.5 (Mojave) \n'
     printf '\n!!!! ВЫПОЛНЕНИЕ НЕВОЗМОЖНО. ВЫХОД !!!!\n\n\n\n\n'
     read -p "Для выхода нажмите любую клавишу" -n 1 -r
         fi
@@ -102,6 +103,7 @@ case "$string" in
 "10142" ) bstring=18C54; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/patchedapps/HybridMode-185C4-v1.4.1.zip?raw=true";;
 "10143" ) bstring=18D109; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/patchedapps/Hybrid-18D109-v1.4.2.zip?raw=true";;
 "10144" ) bstring=18E226; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/patchedapps/Hybrid-18E226-v1.4.3.zip?raw=true";;
+"10145" ) bstring=18E226; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/patchedapps/Hybrid-18E226-v1.4.3.zip?raw=true";;
 esac
 
             if [ ! $loc = "ru" ]; then 
@@ -113,10 +115,10 @@ esac
 while :;do printf '.' ;sleep 0.4;done &
 trap "kill $!" EXIT 
 cd ./HybridMode/$string
-curl -L -s -o Hybrid.zip $zname 2>/dev/null
-unzip  -o -qq Hybrid*.zip 2>/dev/null
 rm -f HIToolbox
 rm -f CoreUI
+curl -L -s -o Hybrid.zip $zname 2>/dev/null
+unzip  -o -qq Hybrid*.zip 2>/dev/null
 rm Hybrid*.zip 2>/dev/null
 mv CoreUI* CoreUI 2>/dev/null
 mv HIToolbox* HIToolbox 2>/dev/null
@@ -153,11 +155,11 @@ fi
 if [ $net = 0 ]; then 
     if [ ! -f "HybridMode.zip" ]; then
            if [ ! $loc = "ru" ]; then 
-    printf 'this network version of the program does not contain local files  !!!\n'
+    printf 'no files to make this patch  !!!\n'
     printf 'the end of the program  !!!\n\n\n'
     read -p "Press any key to close this window " -n 1 -r
             else 
-    printf 'Это сетевая версия патчера не содержит локальные файлы !!!\n'
+    printf 'Не получены  файлы для патча  !!!\n'
     printf 'Продолжение программы невозможно. !!!\n\n\n'
     read -p "Для выхода нажмите любую клавишу" -n 1 -r
             fi
@@ -171,7 +173,22 @@ osascript -e 'tell application "Terminal" to close first window' & exit
             else 
     printf 'Найден локальный архив. !!!\n'
          fi
-     unzip  -o -qq HybridMode.zip 
+     unzip  -o -qq HybridMode.zip
+        if [ ! -f "HybridMode/$string/CoreUI" ] || [ ! -f "HybridMode/$string/HIToolbox" ]; then
+            if [ ! $loc = "ru" ]; then 
+    printf 'The patched files for '"`sw_vers -productVersion`"' in archive not found. !!!\n\n'
+    printf 'the end of the program  !!!\n\n\n'
+    read -p "Press any key to close this window " -n 1 -r
+            else 
+    printf 'Файлы для патча '"`sw_vers -productVersion`"' в архиве не найдены !!!\n\n'
+    printf 'Продолжение программы невозможно. !!!\n\n\n'
+    read -p "Для выхода нажмите любую клавишу" -n 1 -r
+            fi
+        rm -R -f ./HybridMode
+        rm -R -f ./__MACOSX
+    clear
+    osascript -e 'tell application "Terminal" to close first window' & exit
+        fi    
     fi   
 fi
 
