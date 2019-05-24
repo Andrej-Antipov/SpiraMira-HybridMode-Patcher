@@ -13,10 +13,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****              SpiraMira Hybrid Mode Patch Remover               ******\n'
-printf '*****                   Version 1.42 BETA net                        ******\n'
+printf '*****                   Version 1.43 net                             ******\n'
                 else
 printf '\n\n*****         Удаляем патч гибридного режима интерфейса SpiraMira         ******\n'
-printf '*****                      Версия 1.42 BETA net                           ******\n'
+printf '*****                      Версия 1.43 net                                ******\n'
             fi
 
 
@@ -105,7 +105,7 @@ case "$string" in
 "10142" ) bstring=18C54; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/originalapps/HIToolbox?raw=true";;
 "10143" ) bstring=18D109; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/originalapps/HIToolbox?raw=true";;
 "10144" ) bstring=18E226; cname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/originalapps/CoreUI?raw=true"; hname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/originalapps/HIToolbox?raw=true";;
-"10145" ) bstring=18F108f; cname="https://github.com/Andrej-Antipov/SpiraMira-HybridMode-Patcher/blob/master/Original/10145/CoreUI?raw=true"; hname="https://github.com/Andrej-Antipov/SpiraMira-HybridMode-Patcher/blob/master/Original/10145/HIToolbox?raw=true";;
+"10145" ) bstring=18F132; cname="https://github.com/Andrej-Antipov/SpiraMira-HybridMode-Patcher/blob/master/Original/10145/CoreUI?raw=true"; hname="https://github.com/Andrej-Antipov/SpiraMira-HybridMode-Patcher/blob/master/Original/10145/HIToolbox?raw=true";;
 esac
 
  if [ ! $loc = "ru" ]; then 

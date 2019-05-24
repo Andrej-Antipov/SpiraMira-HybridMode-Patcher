@@ -12,10 +12,10 @@ loc=`locale | grep LANG | sed -e 's/.*LANG="\(.*\)_.*/\1/'`
 
             if [ ! $loc = "ru" ]; then
 printf '\n\n*****   SpiraMira Hybrid Mode Patch for Mojave (10.14.1 - 10.14.5)   ******\n'
-printf '*****                    Version 1.42 BETA net                       ******\n'
+printf '*****                    Version 1.43 net                           ******\n'
                 else
 printf '\n\n*****   Патч гибридного режима интерфейса SpiraMira (10.14.1 - 10.14.5)   ******\n'
-printf '*****                      Версия 1.42 BETA net                           ******\n'
+printf '*****                      Версия 1.43  net                               ******\n'
             fi
 
 sleep 0.5
@@ -103,7 +103,7 @@ case "$string" in
 "10142" ) bstring=18C54; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18C54/patchedapps/HybridMode-185C4-v1.4.1.zip?raw=true";;
 "10143" ) bstring=18D109; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18D109/patchedapps/Hybrid-18D109-v1.4.2.zip?raw=true";;
 "10144" ) bstring=18E226; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/patchedapps/Hybrid-18E226-v1.4.3.zip?raw=true";;
-"10145" ) bstring=18E226; zname="https://github.com/SpiraMira/HybridMode-Public/blob/master/files/18E226/patchedapps/Hybrid-18E226-v1.4.3.zip?raw=true";;
+"10145" ) bstring=18E226; zname="https://github.com/SpiraMira/HybridMode-Public/releases/download/v1.5/Hybrid-18F132-v1.5.zip?raw=true";;
 esac
 
             if [ ! $loc = "ru" ]; then 
